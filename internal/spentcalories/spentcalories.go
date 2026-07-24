@@ -74,7 +74,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	case "Ходьба":
 		calories, err = WalkingSpentCalories(steps, weight, height, duration)
 	case "Бег":
-		calories, err = WalkingSpentCalories(steps, weight, height, duration)
+		calories, err = RunningSpentCalories(steps, weight, height, duration)
 	default:
 		return "", fmt.Errorf("неизвестный тип тренировки")
 	}
@@ -104,7 +104,7 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 		return 0, fmt.Errorf("недопустимое время (<=0)")
 	}
 
-	meanSpeed := meanSpeed(steps, height, duration) // ПРОВЕРИТЬ
+	meanSpeed := meanSpeed(steps, height, duration)
 	durationInMinutes := duration.Minutes()
 	result := (weight * meanSpeed * durationInMinutes) / minInH
 	return result, nil
@@ -125,7 +125,7 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 	if duration <= 0 {
 		return 0, fmt.Errorf("недопустимое время (<=0)")
 	}
-	meanSpeed := meanSpeed(steps, height, duration) // ПРОВЕРИТЬ
+	meanSpeed := meanSpeed(steps, height, duration)
 	durationInMinutes := duration.Minutes()
 	result := ((weight * meanSpeed * durationInMinutes) / minInH) * walkingCaloriesCoefficient
 	return result, nil
